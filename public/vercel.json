@@ -1,0 +1,39 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)zh" }],
+      "destination": "/zh/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)ja" }],
+      "destination": "/ja/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)ko" }],
+      "destination": "/ko/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)es" }],
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)pt" }],
+      "destination": "/pt/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)en" }],
+      "destination": "/en/"
+    }
+  ]
+}

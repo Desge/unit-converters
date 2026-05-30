@@ -4,7 +4,7 @@ import type { MetadataRoute } from 'next';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const domain = 'https://unit-conv.com';
+  const domain = 'https://unit.toolconv.com';
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of LOCALES) {

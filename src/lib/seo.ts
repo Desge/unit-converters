@@ -3,7 +3,7 @@ import { Locale, ConversionPair, CATEGORIES } from './conversions';
 // ──── Site Config ────
 export const SITE = {
   name: 'UnitConvert',
-  domain: 'https://unitconvert.pro',
+  domain: 'https://unit-conv.com',
   tagline: { en: 'Free Online Unit Converter', zh: '免费在线单位换算器', ja: '無料オンライン単位変換', ko: '무료 온라인 단위 변환기', es: 'Conversor de Unidades Gratis', pt: 'Conversor de Unidades Grátis' },
   description: {
     en: 'Convert between thousands of units instantly. Length, weight, temperature, area, volume, speed, data, time & currency — all in your browser.',

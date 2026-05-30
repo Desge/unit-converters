@@ -1,63 +1,27 @@
-'use client';
-
-import { useEffect } from 'react';
-
 /**
- * 语言检测优先级：
- * 1. localStorage 中用户之前手动选择的语言
- * 2. navigator.language（浏览器首选语言）
- * 3. navigator.languages（完整语言列表，逐项匹配）
- * 4. 默认 fallback: 'en'
+ * 根路径 (/) — 语言检测 & 重定向
+ *
+ * 三层降级策略:
+ *   L1: Cloudflare Pages _worker.js / Vercel vercel.json (边缘层，零客户端成本)
+ *   L2: 本页内联 <script>（HTML 解析阶段执行，早于 React hydration）
+ *   L3: navigator.language 默认 fallback → 'en'
+ *
+ * 优先级: localStorage > navigator.language > navigator.languages > 'en'
  */
-const SUPPORTED_LOCALES = ['en', 'zh', 'ja', 'ko', 'es', 'pt'] as const;
-
-function normalizeLocale(raw: string): string | null {
-  // 'zh-CN', 'zh-TW', 'zh-Hans' → 'zh'
-  // 'en-US', 'en-GB' → 'en'
-  // 'ja-JP' → 'ja'
-  // 'ko-KR' → 'ko'
-  // 'es-ES', 'es-MX' → 'es'
-  // 'pt-BR', 'pt-PT' → 'pt'
-  const base = raw.split('-')[0].toLowerCase();
-  if (SUPPORTED_LOCALES.includes(base as typeof SUPPORTED_LOCALES[number])) {
-    return base;
-  }
-  return null;
-}
-
-function detectLocale(): string {
-  // Layer 1: localStorage 保存的偏好（用户之前手动切换过的）
-  if (typeof window !== 'undefined') {
-    try {
-      const saved = localStorage.getItem('locale');
-      if (saved && SUPPORTED_LOCALES.includes(saved as typeof SUPPORTED_LOCALES[number])) {
-        return saved;
-      }
-    } catch { /* localStorage 不可用时忽略 */ }
-  }
-
-  // Layer 2: navigator.language（浏览器首选语言）
-  if (typeof navigator !== 'undefined') {
-    const match = normalizeLocale(navigator.language);
-    if (match) return match;
-  }
-
-  // Layer 3: navigator.languages（完整优先级列表）
-  if (typeof navigator !== 'undefined' && navigator.languages) {
-    for (const lang of navigator.languages) {
-      const match = normalizeLocale(lang);
-      if (match) return match;
-    }
-  }
-
-  // Layer 4: 默认英文
-  return 'en';
-}
-
 export default function RootPage() {
-  useEffect(() => {
-    const locale = detectLocale();
-    window.location.replace(`/${locale}/`);
-  }, []);
-  return null;
+  // 内联脚本在 HTML 解析阶段执行，早于任何 React 代码
+  // dangerouslySetInnerHTML 在静态导出时输出为原生 <script> 标签
+  const detectScript = `
+(function(){
+  var L=['en','zh','ja','ko','es','pt'];
+  var l='en';
+  try{var s=localStorage.getItem('locale');if(s&&L.indexOf(s)>=0)l=s;}catch(e){}
+  if(l==='en'){var n=(navigator.language||'').split('-')[0];if(L.indexOf(n)>=0)l=n;}
+  if(l==='en'&&navigator.languages){for(var i=0;i<navigator.languages.length;i++){var m=navigator.languages[i].split('-')[0];if(L.indexOf(m)>=0){l=m;break;}}}
+  if(window.location.pathname==='/'||window.location.pathname===''){
+    location.replace('/'+l+'/');
+  }
+})();`;
+
+  return <script dangerouslySetInnerHTML={{ __html: detectScript }} />;
 }

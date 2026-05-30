@@ -26,9 +26,12 @@ export default function LanguageSwitcher({ currentLocale }: Props) {
   }, []);
 
   function switchTo(locale: Locale) {
-    // 保存用户偏好到 localStorage，下次访问自动检测
+    // 保存用户偏好到 localStorage + cookie
+    //   - localStorage: 客户端 JS 语言检测使用
+    //   - cookie: Cloudflare Pages 边缘 Worker 使用（免去客户端重定向）
     try {
       localStorage.setItem('locale', locale);
+      document.cookie = `locale=${locale};path=/;max-age=31536000;SameSite=Lax`;
     } catch { /* ignore */ }
     window.location.href = `/${locale}${currentPath}`;
   }

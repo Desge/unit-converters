@@ -22,7 +22,7 @@ export const LOCALE_NAMES: Record<Locale, string> = {
 
 // ──── Shared OG Image & Twitter Card ────
 const OG_IMAGE = {
-  url: `${SITE.domain}/og-image.svg`,
+  url: `${SITE.domain}/og-image.png`,
   width: 1200,
   height: 630,
   alt: SITE.name,

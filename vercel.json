@@ -34,6 +34,11 @@
       "source": "/",
       "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)en" }],
       "destination": "/en/"
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "permanent": false
     }
   ]
 }

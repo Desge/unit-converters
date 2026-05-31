@@ -4,6 +4,16 @@ import '@/app/globals.css';
 export const metadata: Metadata = {
   title: 'UnitConvert — Free Online Unit Converter',
   description: 'Free online unit converter. Length, weight, temperature, area, volume, speed, data, time & currency.',
+  openGraph: {
+    type: 'website',
+    siteName: 'UnitConvert',
+    images: [{ url: 'https://unit.toolconv.com/og-image.svg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@toolconv',
+    images: ['https://unit.toolconv.com/og-image.svg'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

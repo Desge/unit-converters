@@ -1,6 +1,6 @@
 import { LOCALES, CATEGORIES, ALL_PAIRS } from '@/lib/conversions';
 import type { Locale } from '@/lib/conversions';
-import { SITE, generateHomeMeta } from '@/lib/seo';
+import { SITE, generateHomeMeta, generateWebSiteSchema } from '@/lib/seo';
 import Link from 'next/link';
 
 export function generateStaticParams() {
@@ -16,6 +16,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      {/* SEO Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateWebSiteSchema(locale)) }}
+      />
+
       {/* Hero */}
       <section className="text-center mb-16">
         <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">

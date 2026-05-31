@@ -20,19 +20,45 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   en: 'English', zh: '中文', ja: '日本語', ko: '한국어', es: 'Español', pt: 'Português',
 };
 
+// ──── Shared OG Image & Twitter Card ────
+const OG_IMAGE = {
+  url: `${SITE.domain}/og-image.svg`,
+  width: 1200,
+  height: 630,
+  alt: SITE.name,
+};
+
+const TWITTER_CARD = {
+  card: 'summary_large_image' as const,
+  site: '@toolconv',
+  images: [OG_IMAGE.url],
+};
+
 // ──── Page Metadata ────
 export function generateHomeMeta(locale: Locale) {
   const title = `${SITE.name} — ${SITE.tagline[locale]}`;
+  const canonical = `${SITE.domain}/${locale}/`;
   return {
     title,
     description: SITE.description[locale],
-    alternates: { languages: Object.fromEntries(['en','zh','ja','ko','es','pt'].map(l => [l, `/${l}/`])) },
+    canonical,
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': `${SITE.domain}/en/`,
+        ...Object.fromEntries(['en','zh','ja','ko','es','pt'].map(l => [l, `${SITE.domain}/${l}/`])),
+      },
+    },
     openGraph: {
       title,
       description: SITE.description[locale],
       type: 'website' as const,
       locale: locale === 'zh' ? 'zh_CN' : locale === 'ja' ? 'ja_JP' : locale === 'ko' ? 'ko_KR' : locale === 'es' ? 'es_ES' : locale === 'pt' ? 'pt_BR' : 'en_US',
+      url: canonical,
+      siteName: SITE.name,
+      images: [OG_IMAGE],
     },
+    twitter: TWITTER_CARD,
   };
 }
 
@@ -41,24 +67,50 @@ export function generateConverterMeta(pair: ConversionPair, locale: Locale) {
   const toName = pair.to.name[locale] || pair.to.name.en;
   const title = `${fromName} to ${toName} Converter — Free Online | ${SITE.name}`;
   const description = `Convert ${fromName} (${pair.from.symbol}) to ${toName} (${pair.to.symbol}) instantly. Free online ${pair.categoryName[locale] || pair.categoryName.en} converter with formula and conversion table.`;
+  const canonical = `${SITE.domain}/${locale}/convert/${pair.slug}/`;
   
   return {
     title,
     description,
+    canonical,
     alternates: {
-      languages: Object.fromEntries(
-        ['en','zh','ja','ko','es','pt'].map(l => [`/${l}/convert/${pair.slug}/`])
-      ),
+      canonical,
+      languages: {
+        'x-default': `${SITE.domain}/${locale}/convert/${pair.slug}/`,
+        ...Object.fromEntries(
+          ['en','zh','ja','ko','es','pt'].map(l => [l, `${SITE.domain}/${l}/convert/${pair.slug}/`])
+        ),
+      },
     },
     openGraph: {
       title,
       description,
       type: 'website' as const,
+      url: canonical,
+      siteName: SITE.name,
+      images: [OG_IMAGE],
     },
+    twitter: TWITTER_CARD,
   };
 }
 
 // ──── JSON-LD Schemas ────
+export function generateWebSiteSchema(locale: Locale) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: `${SITE.domain}/${locale}/`,
+    description: SITE.description[locale],
+    inLanguage: locale,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${SITE.domain}/${locale}/convert/{query}/`,
+      'query-input': 'required name=query',
+    },
+  };
+}
+
 export function generateWebAppSchema(pair: ConversionPair, locale: Locale) {
   const name = `${pair.from.name[locale] || pair.from.name.en} to ${pair.to.name[locale] || pair.to.name.en} Converter`;
   return {

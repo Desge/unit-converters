@@ -8,22 +8,34 @@ export function generateStaticParams() {
   return LOCALES.map(locale => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
-  return generateHomeMeta(params.locale as Locale);
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return generateHomeMeta(locale as Locale);
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  const lang = LOCALES.includes(locale as Locale) ? locale : 'en';
+
   return (
-    <>
-      <Header locale={params.locale as Locale} />
-      <main className="flex-1">{children}</main>
-      <Footer locale={params.locale as Locale} />
-    </>
+    <html lang={lang} suppressHydrationWarning>
+      <head>
+        {/* Theme init — inline script to prevent FOUC */}
+        <script dangerouslySetInnerHTML={{
+          __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
+        }} />
+      </head>
+      <body className="min-h-screen flex flex-col">
+        <Header locale={locale as Locale} />
+        <main className="flex-1">{children}</main>
+        <Footer locale={locale as Locale} />
+      </body>
+    </html>
   );
 }

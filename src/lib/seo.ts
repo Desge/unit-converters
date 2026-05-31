@@ -76,7 +76,7 @@ export function generateConverterMeta(pair: ConversionPair, locale: Locale) {
     alternates: {
       canonical,
       languages: {
-        'x-default': `${SITE.domain}/${locale}/convert/${pair.slug}/`,
+        'x-default': `${SITE.domain}/en/convert/${pair.slug}/`,
         ...Object.fromEntries(
           ['en','zh','ja','ko','es','pt'].map(l => [l, `${SITE.domain}/${l}/convert/${pair.slug}/`])
         ),

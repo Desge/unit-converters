@@ -30,8 +30,11 @@ export default function Footer({ locale }: { locale: Locale }) {
         </div>
 
         <div className="mt-10 pt-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-[var(--text-tertiary)]">
-            © 2026 {SITE.name}. {localeLabels[locale] || 'All rights reserved.'}
+          {/* Cross-site links */}
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <span className="font-semibold text-[var(--text-secondary)]">Also try:</span>
+            <a href="https://pdf.toolconv.com" className="text-brand-500 hover:text-brand-600 font-medium">📄 PDF Tools</a>
+            <a href="https://image.toolconv.com" className="text-brand-500 hover:text-brand-600 font-medium">🖼️ Image Tools</a>
           </div>
           <div className="flex items-center gap-6 text-sm text-[var(--text-tertiary)]">
             <a href={`/${locale}/`} className="hover:text-brand-500 transition-colors">

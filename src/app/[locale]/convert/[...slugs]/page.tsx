@@ -1,6 +1,6 @@
 import { LOCALES, ALL_PAIRS, findPair, CATEGORIES } from '@/lib/conversions';
 import type { Locale } from '@/lib/conversions';
-import { generateConverterMeta, generateWebAppSchema, generateBreadcrumbSchema, generateFAQSchema } from '@/lib/seo';
+import { generateConverterMeta, generateWebAppSchema, generateBreadcrumbSchema, generateFAQSchema, generateHowToSchema } from '@/lib/seo';
 import ConverterTool from '@/components/ConverterTool';
 
 // Generate all locale × conversion pair combinations
@@ -58,6 +58,18 @@ export default function ConverterPage({ params }: { params: { locale: string; sl
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(pair, locale)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateHowToSchema(
+          `${fromName} → ${toName} Converter`,
+          `Follow these simple steps to convert ${fromName} to ${toName} using our free online converter.`,
+          [
+            { name: 'Enter Value', text: `Type the ${fromName} value you want to convert in the input field.` },
+            { name: 'Select Units', text: `Choose ${fromName} as the source unit and ${toName} as the target unit from the dropdowns.` },
+            { name: 'Get Result', text: `The converted ${toName} value appears instantly, along with the conversion formula and table.` },
+          ]
+        )) }}
       />
 
       {/* Breadcrumb */}

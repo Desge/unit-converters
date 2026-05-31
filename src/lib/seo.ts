@@ -164,3 +164,18 @@ export function generateFAQSchema(pair: ConversionPair, locale: Locale) {
     ],
   };
 }
+
+/** HowTo schema — step-by-step guide for using the converter */
+export function generateHowToSchema(name: string, description: string, steps: { name: string; text: string }[]): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name,
+    description,
+    step: steps.map((s) => ({
+      '@type': 'HowToStep',
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}

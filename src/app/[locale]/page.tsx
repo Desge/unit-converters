@@ -1,6 +1,7 @@
 import { LOCALES, CATEGORIES, ALL_PAIRS } from '@/lib/conversions';
 import type { Locale } from '@/lib/conversions';
 import { SITE, generateHomeMeta, generateWebSiteSchema } from '@/lib/seo';
+import { t } from '@/lib/i18n';
 import Link from 'next/link';
 
 export function generateStaticParams() {
@@ -34,13 +35,13 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <span className="text-sm text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full">
-            📊 {ALL_PAIRS.length.toLocaleString()}+ {locale === 'zh' ? '组换算' : locale === 'ja' ? '変換ペア' : locale === 'ko' ? '변환 쌍' : locale === 'es' ? 'pares' : locale === 'pt' ? 'pares' : 'pairs'}
+            📊 {ALL_PAIRS.length.toLocaleString()}+ {t('pairs', locale)}
           </span>
           <span className="text-sm text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full">
-            🌍 {LOCALES.length} {locale === 'zh' ? '种语言' : locale === 'ja' ? '言語' : locale === 'ko' ? '개 언어' : locale === 'es' ? 'idiomas' : locale === 'pt' ? 'idiomas' : 'languages'}
+            🌍 {LOCALES.length} {t('languages', locale)}
           </span>
           <span className="text-sm text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full">
-            ⚡ {locale === 'zh' ? '即时计算' : locale === 'ja' ? '即時計算' : locale === 'ko' ? '즉시 계산' : locale === 'es' ? 'Instantáneo' : locale === 'pt' ? 'Instantâneo' : 'Instant'}
+            ⚡ {t('instant', locale)}
           </span>
         </div>
       </section>
@@ -63,7 +64,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                     {cat.name[locale] || cat.name.en}
                   </h3>
                   <p className="text-sm text-[var(--text-tertiary)]">
-                    {pairCount} {locale === 'zh' ? '组换算' : 'pairs'}
+                    {pairCount} {t('pairs', locale)}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {cat.units.slice(0, 5).map(u => (
@@ -86,14 +87,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
 
       {/* How it Works */}
       <section className="mt-20 text-center">
-        <h2 className="text-2xl font-bold mb-8">
-          {locale === 'zh' ? '如何使用' : locale === 'ja' ? '使い方' : locale === 'ko' ? '사용 방법' : locale === 'es' ? 'Cómo usar' : locale === 'pt' ? 'Como usar' : 'How to Use'}
-        </h2>
+        <h2 className="text-2xl font-bold mb-8">{t('howToUse', locale)}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
           {[
-            { icon: '1️⃣', title: locale === 'zh' ? '选择类别' : locale === 'ja' ? 'カテゴリを選択' : locale === 'ko' ? '카테고리 선택' : 'Pick a Category', desc: locale === 'zh' ? '长度、重量、温度等 9 大类' : locale === 'ja' ? '長さ、重さ、温度など9カテゴリ' : locale === 'ko' ? '길이, 무게, 온도 등 9개 카테고리' : 'Length, weight, temperature & more' },
-            { icon: '2️⃣', title: locale === 'zh' ? '输入数值' : locale === 'ja' ? '数値を入力' : locale === 'ko' ? '값 입력' : 'Enter Value', desc: locale === 'zh' ? '输入数字，即时获得换算结果' : locale === 'ja' ? '数字を入力すると即座に変換結果が表示' : locale === 'ko' ? '숫자를 입력하면 즉시 변환 결과 표시' : 'Type a number, get instant results' },
-            { icon: '3️⃣', title: locale === 'zh' ? '自由切换单位' : locale === 'ja' ? '単位を切り替え' : locale === 'ko' ? '단위 전환' : 'Swap Units', desc: locale === 'zh' ? '下拉菜单切换任意单位' : locale === 'ja' ? 'ドロップダウンで任意の単位に切替' : locale === 'ko' ? '드롭다운으로 모든 단위 전환' : 'Switch between any units instantly' },
+            { icon: '1️⃣', title: t('pickCategory', locale), desc: t('pickCategory', locale) === t('pickCategory', 'en') ? 'Length, weight, temperature & more' : SITE.description[locale] },
+            { icon: '2️⃣', title: t('enterValue', locale), desc: t('enterValueDesc', locale) },
+            { icon: '3️⃣', title: t('swapUnits', locale), desc: t('swapUnitsDesc', locale) },
           ].map((step, i) => (
             <div key={i} className="card p-6">
               <div className="text-3xl mb-3">{step.icon}</div>

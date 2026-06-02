@@ -1,0 +1,35 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="accentBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#ec4899"/>
+    </linearGradient>
+    <linearGradient id="accentBox" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accentBar)"/>
+  <rect x="40" y="40" width="1120" height="550" rx="20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"/>
+  <g transform="translate(80, 100)">
+    <rect x="0" y="0" width="80" height="80" rx="18" fill="url(#accentBox)"/>
+    <text x="40" y="52" font-family="system-ui,sans-serif" font-size="36" text-anchor="middle" fill="white">⇄</text>
+  </g>
+  <text x="80" y="220" font-family="system-ui,sans-serif" font-size="18" fill="rgba(255,255,255,0.4)" letter-spacing="2">UNITCONVERT</text>
+  <text x="80" y="290" font-family="system-ui,sans-serif" font-size="56" font-weight="800" fill="white">Any Unit → Any Unit</text>
+  <text x="80" y="350" font-family="system-ui,sans-serif" font-size="32" font-weight="400" fill="rgba(255,255,255,0.6)">Free Online Unit Converter</text>
+  <text x="80" y="420" font-family="system-ui,sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">🌍 6 Languages • 📊 9 Categories • ⚡ 480+ Conversions</text>
+  <rect x="80" y="490" width="300" height="44" rx="22" fill="rgba(255,255,255,0.06)"/>
+  <text x="100" y="518" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="rgba(255,255,255,0.8)">⚡ Instant Conversion</text>
+  <text x="1000" y="530" font-family="system-ui,sans-serif" font-size="22" font-weight="600" fill="rgba(255,255,255,0.3)" text-anchor="end">unit.toolconv.com</text>
+</svg>

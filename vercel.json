@@ -1,44 +1,31 @@
 {
-  "redirects": [
+  "headers": [
     {
-      "source": "/",
-      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)zh" }],
-      "destination": "/zh/",
-      "permanent": false
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
     },
     {
-      "source": "/",
-      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)ja" }],
-      "destination": "/ja/",
-      "permanent": false
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" }
+      ]
     },
     {
-      "source": "/",
-      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)ko" }],
-      "destination": "/ko/",
-      "permanent": false
+      "source": "/_next/static/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
     },
     {
-      "source": "/",
-      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)es" }],
-      "destination": "/es/",
-      "permanent": false
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)pt" }],
-      "destination": "/pt/",
-      "permanent": false
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "header", "key": "Accept-Language", "value": "(^|,\\s*)en" }],
-      "destination": "/en/"
-    },
-    {
-      "source": "/",
-      "destination": "/en/",
-      "permanent": false
+      "source": "/(.*).(svg|png|jpg|ico|webp)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800" }
+      ]
     }
   ]
 }

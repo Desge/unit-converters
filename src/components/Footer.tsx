@@ -1,6 +1,7 @@
 import { CATEGORIES, LOCALES } from '@/lib/conversions';
 import type { Locale } from '@/lib/conversions';
 import { SITE } from '@/lib/seo';
+import { t } from '@/lib/i18n';
 
 export default function Footer({ locale }: { locale: Locale }) {
   return (
@@ -32,30 +33,36 @@ export default function Footer({ locale }: { locale: Locale }) {
         <div className="mt-10 pt-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row justify-between items-center gap-4">
           {/* Cross-site links */}
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <span className="font-semibold text-[var(--text-secondary)]">Also try:</span>
+            <span className="font-semibold text-[var(--text-secondary)]">{t('alsoTry', locale)}</span>
             <a href="https://pdf.toolconv.com" className="text-brand-500 hover:text-brand-600 font-medium">📄 PDF Tools</a>
             <a href="https://image.toolconv.com" className="text-brand-500 hover:text-brand-600 font-medium">🖼️ Image Tools</a>
           </div>
-          <div className="flex items-center gap-6 text-sm text-[var(--text-tertiary)]">
-            <a href={`/${locale}/`} className="hover:text-brand-500 transition-colors">
-              {localeLabels2[locale] || 'Home'}
-            </a>
+          {/* Legal links */}
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-[var(--text-tertiary)]">
+            <a href={`/${locale}/privacy/`} className="hover:text-brand-500 transition-colors">{legalLinks.privacy[locale]}</a>
+            <a href={`/${locale}/terms/`} className="hover:text-brand-500 transition-colors">{legalLinks.terms[locale]}</a>
+            <a href={`/${locale}/about/`} className="hover:text-brand-500 transition-colors">{legalLinks.about[locale]}</a>
+            <a href={`/${locale}/contact/`} className="hover:text-brand-500 transition-colors">{legalLinks.contact[locale]}</a>
           </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-6 text-center text-xs text-[var(--text-tertiary)]">
+          © {new Date().getFullYear()} UnitConvert. {copyrightText[locale]}
         </div>
       </div>
     </footer>
   );
 }
 
-const localeLabels: Record<string, string> = {
-  zh: '保留所有权利。',
-  ja: '無断複写・転載を禁じます。',
-  ko: '모든 권리 보유.',
-  es: 'Todos los derechos reservados.',
-  pt: 'Todos os direitos reservados.',
-  en: 'All rights reserved.',
+const copyrightText: Record<string, string> = {
+  zh: '保留所有权利。', ja: '無断複写・転載を禁じます。', ko: '모든 권리 보유.',
+  es: 'Todos los derechos reservados.', pt: 'Todos os direitos reservados.', en: 'All rights reserved.',
 };
 
-const localeLabels2: Record<string, string> = {
-  zh: '首页', ja: 'ホーム', ko: '홈', es: 'Inicio', pt: 'Início', en: 'Home',
+const legalLinks = {
+  privacy: { en: 'Privacy Policy', zh: '隐私政策', ja: 'プライバシーポリシー', ko: '개인정보 처리방침', es: 'Política de Privacidad', pt: 'Política de Privacidade' },
+  terms: { en: 'Terms of Service', zh: '服务条款', ja: '利用規約', ko: '이용약관', es: 'Términos de Servicio', pt: 'Termos de Serviço' },
+  about: { en: 'About Us', zh: '关于我们', ja: '私たちについて', ko: '소개', es: 'Sobre Nosotros', pt: 'Sobre Nós' },
+  contact: { en: 'Contact Us', zh: '联系我们', ja: 'お問い合わせ', ko: '문의하기', es: 'Contáctenos', pt: 'Contate-nos' },
 };

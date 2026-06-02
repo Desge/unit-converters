@@ -3,6 +3,8 @@ import { generateHomeMeta } from '@/lib/seo';
 import type { Locale } from '@/lib/conversions';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export function generateStaticParams() {
   return LOCALES.map(locale => ({ locale }));
@@ -26,6 +28,8 @@ export default async function LocaleLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#7c3aed" />
         {/* Theme init — inline script to prevent FOUC */}
         <script dangerouslySetInnerHTML={{
           __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
@@ -35,6 +39,8 @@ export default async function LocaleLayout({
         <Header locale={locale as Locale} />
         <main className="flex-1">{children}</main>
         <Footer locale={locale as Locale} />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

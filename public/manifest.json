@@ -1,0 +1,16 @@
+{
+  "name": "UnitConvert — Free Online Unit Converter",
+  "short_name": "UnitConvert",
+  "description": "Convert length, weight, temperature, area, volume, speed, data, time, currency & more — instantly in your browser.",
+  "start_url": "/en/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/og-image.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/og-image.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "en"
+}

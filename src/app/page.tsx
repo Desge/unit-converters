@@ -87,7 +87,7 @@ if(window.location.pathname==='/'||window.location.pathname===''){
                locale === 'ja' ? '日本語' :
                locale === 'ko' ? '한국어' :
                locale === 'es' ? 'Español' :
-               locale === 'pt' ? 'Português' : locale.toUpperCase()}
+               'Português'}
             </a>
           ))}
         </nav>
